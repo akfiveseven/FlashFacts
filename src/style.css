@@ -48,7 +48,7 @@ body {
 
 .card .back {
   transform: rotateY(180deg);
-  color: #cccccc;
+  color: black;
 }
 
 li {
@@ -87,8 +87,10 @@ ul {
 .bob1 {
   margin-right: 5px;
   margin-top: 10px;
+  margin-bottom: 10px;
 }
 .bob2 {
   margin-left: 5px;
   margin-top: 10px;
+  margin-bottom: 10px;
 }
