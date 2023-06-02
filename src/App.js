@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import Card from './Card'
 import Home from './Home'
 import Navbar from './Navbar'
+import Create from './Create'
 
 export default function App() {
   const [questions, setQuestions] = useState([]);
@@ -55,22 +56,14 @@ export default function App() {
     localStorage.setItem('questionKey', JSON.stringify(questions));
   }, [questions]);
 
-   useEffect(() => {
-     console.log(questions); // Log the questions array whenever it changes
-   }, [questions]);
 
   return (
     <>
-      <input ref={questionRef} type="text" placeholder="Question"></input>
-        <input ref={answerRef} type="text" placeholder="Answer"></input>
-        <button onClick={handleClick}>Submit</button>
-        <button onClick={handleClear}>Clear</button>
-        <button onClick={handlePage}>Home</button>
-        {cards}
       <Router>
+        <Navbar />
         <Routes>
           <Route path="/" />
-          <Route path="/home" element={<Home />} />
+          <Route path="/create" element={<Create />} />
         </Routes>
       </Router>
     </>
