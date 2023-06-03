@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Card from './Card';
+import CardList from './CardList'
 import './style.css';
 
 export default function Create() {
@@ -32,13 +33,6 @@ export default function Create() {
     setQuestions([]);
   }
 
-  const cards = questions.map(item => (
-    <Card 
-      key={item.id}
-      question={item.question}
-      answer={item.answer}
-    />
-  ));
 
   //<button onClick={handleClear}>Clear</button>
 
@@ -50,6 +44,9 @@ export default function Create() {
   useEffect(() => {
     localStorage.setItem('questionKey', JSON.stringify(questions));
   }, [questions]);
+
+
+
   return (
     <div className="thing text-center">
       <input className="field form-control" ref={questionRef} type="text" placeholder="Question"></input>
@@ -57,7 +54,7 @@ export default function Create() {
       <button className="bob1 btn btn-light" onClick={handleSubmit}>Submit</button>
       <button className="bob2 btn btn-light" onClick={handleClear}>Clear</button>
       <div className="cardy">
-        {cards}
+        <CardList questions={questions} />
       </div>
     </div>
   );
