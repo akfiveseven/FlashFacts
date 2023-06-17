@@ -15,6 +15,7 @@ export default function Select() {
   const [userAnswer, setUserAnswer] = useState('');
   const [showAnswer, setShowAnswer] = useState(false);
   const [correctAnswer, setCorrectAnswer] = useState('');
+  const [randomize, setRandomize] = useState(false);
 
   const handleChange = (event) => {
     setSelectedOption(event.target.value);
@@ -27,7 +28,15 @@ export default function Select() {
     const selectedSet = sets.find((set) => set.name === selectedOption);
 
     if (selectedSet) {
-      const cards = selectedSet.cards;
+      let cards = selectedSet.cards;
+
+      console.log("Before: ");
+      console.log(cards);
+      if (randomize) {
+        cards = shuffleArray(cards);
+      }
+      console.log("After");
+      console.log(cards);
 
       if (viewAll) {
         return (
@@ -92,7 +101,6 @@ export default function Select() {
             <button onClick={handlePrev}>Previous</button>
             <button onClick={handleNext}>Next</button>
             <p>{`Card ${currentCardIndex + 1} / ${cards.length}`}</p>
-            <button onClick={() => setQuizMode(true)}>Quiz Mode</button>
           </div>
         );
       }
@@ -114,13 +122,20 @@ export default function Select() {
     }
 
     setSelectedOption('');
+    setViewAll(false);
+    setQuizMode(false);
+    setCurrentCardIndex(0);
+  };
+
+  const handleRandomize = () => {
+    setRandomize(!randomize);
   };
 
   return (
     <div className="dropdown">
       <div className="foo">
         <select className="trigga" value={selectedOption} onChange={handleChange}>
-          <option value="">Select an option</option>
+          <option value="">Select a Set</option>
           {sets.map((set) => (
             <option key={set.id} value={set.name}>
               {set.name}
@@ -135,10 +150,26 @@ export default function Select() {
       <button className="bobby btn btn-light" onClick={handleClear} disabled={!selectedOption}>
         Clear Set
       </button>
-      <button className="bobby btn btn-light" onClick={() => setViewAll(true)} disabled={!selectedOption}>
-        View All Cards
+      <button className="bobby btn btn-light" onClick={() => setViewAll(!viewAll)} disabled={!selectedOption}>
+        {viewAll ? 'Single File' : 'View All Cards'}
       </button>
-      {showResult && handleViewSet()} {/* Render the result of handleViewSet when showResult is true */}
+      <button className="bobby btn btn-light" onClick={() => setQuizMode(!quizMode)} disabled={!selectedOption}>
+        {quizMode ? 'Exit Quiz Mode' : 'Quiz Mode'}
+      </button>
+      <button className="bobby btn btn-light" onClick={handleRandomize} disabled={!selectedOption}>
+        {randomize ? 'Disable Randomize' : 'Randomize'}
+      </button>
+      {showResult && handleViewSet()}
     </div>
   );
+}
+
+// Function to shuffle an array randomly
+function shuffleArray(array) {
+  const shuffledArray = [...array];
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+  }
+  return shuffledArray;
 }
