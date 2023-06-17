@@ -16,12 +16,14 @@ export default function Select() {
   const [showAnswer, setShowAnswer] = useState(false);
   const [correctAnswer, setCorrectAnswer] = useState('');
   const [randomize, setRandomize] = useState(false);
+  const [isSetRandomized, setIsSetRandomized] = useState(false); // New state variable
 
   const handleChange = (event) => {
     setSelectedOption(event.target.value);
     setShowResult(false); // Reset the showResult state when the option changes
     setCurrentCardIndex(0); // Reset the current card index when the option changes
     setQuizMode(false); // Reset the quiz mode when the option changes
+    setIsSetRandomized(false);
   };
 
   const handleViewSet = () => {
@@ -32,8 +34,9 @@ export default function Select() {
 
       console.log("Before: ");
       console.log(cards);
-      if (randomize) {
+      if (randomize) { // Apply randomization only if not already randomized
         cards = shuffleArray(cards);
+        // setIsSetRandomized(true); // Set isSetRandomized to true to indicate the set has been randomized
       }
       console.log("After");
       console.log(cards);
@@ -73,10 +76,10 @@ export default function Select() {
               value={userAnswer}
               onChange={(e) => setUserAnswer(e.target.value)}
             />
-            <button onClick={handleCheckAnswer}>Check Answer</button>
+            <button className="bobby btn btn-light" onClick={handleCheckAnswer}>Check Answer</button>
             {showAnswer && <div>Answer: {currentCard.answer}</div>}
             <div>{correctAnswer}</div>
-            <button onClick={handleNext}>Next</button>
+            <button className="bobby btn btn-light" onClick={handleNext}>Next</button>
             <p>{`Card ${currentCardIndex + 1} / ${cards.length}`}</p>
           </div>
         );
@@ -98,8 +101,8 @@ export default function Select() {
         return (
           <div>
             <Card question={currentCard.question} answer={currentCard.answer} />
-            <button onClick={handlePrev}>Previous</button>
-            <button onClick={handleNext}>Next</button>
+            <button className="bobby btn btn-light" onClick={handlePrev}>Previous</button>
+            <button className="bobby btn btn-light" onClick={handleNext}>Next</button>
             <p>{`Card ${currentCardIndex + 1} / ${cards.length}`}</p>
           </div>
         );
@@ -151,14 +154,14 @@ export default function Select() {
         Clear Set
       </button>
       <button className="bobby btn btn-light" onClick={() => setViewAll(!viewAll)} disabled={!selectedOption}>
-        {viewAll ? 'Single File' : 'View All Cards'}
+        {viewAll ? 'Single Card View' : 'View All Cards'}
       </button>
       <button className="bobby btn btn-light" onClick={() => setQuizMode(!quizMode)} disabled={!selectedOption}>
         {quizMode ? 'Exit Quiz Mode' : 'Quiz Mode'}
       </button>
-      <button className="bobby btn btn-light" onClick={handleRandomize} disabled={!selectedOption}>
+      {/* <button className="bobby btn btn-light" onClick={handleRandomize} disabled={!selectedOption}>
         {randomize ? 'Disable Randomize' : 'Randomize'}
-      </button>
+      </button> */}
       {showResult && handleViewSet()}
     </div>
   );
