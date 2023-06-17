@@ -10,6 +10,7 @@ export default function Select() {
   const [selectedOption, setSelectedOption] = useState('');
   const [showResult, setShowResult] = useState(false); // State variable to control rendering
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const [viewAll, setViewAll] = useState(false);
 
   const handleChange = (event) => {
     setSelectedOption(event.target.value);
@@ -22,28 +23,37 @@ export default function Select() {
 
     if (selectedSet) {
       const cards = selectedSet.cards;
-      const currentCard = cards[currentCardIndex];
 
-      const handleNext = () => {
-        setCurrentCardIndex((prevIndex) =>
-          prevIndex === cards.length - 1 ? 0 : prevIndex + 1
+      if (viewAll) {
+        return (
+          <div>
+            <CardList questions={cards} />
+          </div>
         );
-      };
+      } else {
+        const currentCard = cards[currentCardIndex];
 
-      const handlePrev = () => {
-        setCurrentCardIndex((prevIndex) =>
-          prevIndex === 0 ? cards.length - 1 : prevIndex - 1
+        const handleNext = () => {
+          setCurrentCardIndex((prevIndex) =>
+            prevIndex === cards.length - 1 ? 0 : prevIndex + 1
+          );
+        };
+
+        const handlePrev = () => {
+          setCurrentCardIndex((prevIndex) =>
+            prevIndex === 0 ? cards.length - 1 : prevIndex - 1
+          );
+        };
+
+        return (
+          <div>
+            <Card question={currentCard.question} answer={currentCard.answer} />
+            <p>{`Card ${currentCardIndex + 1} / ${cards.length}`}</p>
+            <button className="butt btn btn-light" onClick={handlePrev}>Previous</button>
+            <button className="butt btn btn-light" onClick={handleNext}>Next</button>
+          </div>
         );
-      };
-
-      return (
-        <div>
-          <Card question={currentCard.question} answer={currentCard.answer} />
-          <button onClick={handlePrev}>Previous</button>
-          <button onClick={handleNext}>Next</button>
-          <p>{`Card ${currentCardIndex + 1} / ${cards.length}`}</p>
-        </div>
-      );
+      }
     } else {
       return null;
     }
@@ -53,40 +63,51 @@ export default function Select() {
     setShowResult(true); // Set showResult to true when the button is clicked
   };
 
-//   const handleClear = () => {
-//     localStorage.removeItem(0);
-//     setSelectedOption("");
-//   };
+  const handleToggleView = () => {
+    setViewAll(!viewAll);
+  };
 
   const handleClear = () => {
     const selectedSet = sets.find((set) => set.name === selectedOption);
-  
+
     if (selectedSet) {
       const updatedSets = sets.filter((set) => set.name !== selectedOption);
       localStorage.setItem('flashcardSets', JSON.stringify(updatedSets));
     }
-  
-    setSelectedOption("");
+
+    setSelectedOption('');
+    setShowResult(false);
+    setCurrentCardIndex(0);
   };
 
+  const isDropdownEmpty = selectedOption === '';
 
   return (
-    <div className="dropdown">
-        <div className="foo">
+    <div>
+      <select className="trigga" value={selectedOption} onChange={handleChange}>
+        <option value="">Select an option</option>
+        {sets.map((set) => (
+          <option key={set.id} value={set.name}>
+            {set.name}
+          </option>
+        ))}
+      </select>
 
-            <select className="trigga" value={selectedOption} onChange={handleChange}>
-                <option value="">Select an option</option>
-                {sets.map((set) => (
-                <option key={set.id} value={set.name}>
-                    {set.name}
-                </option>
-                ))}
-            </select>
-        </div>
+      <button className="butt btn btn-light" onClick={handleClick} disabled={isDropdownEmpty}>
+       View Set 
+      </button>
+      <button className="butt btn btn-light" onClick={handleClear} disabled={isDropdownEmpty}>
+        Clear Set
+      </button>
+      <button
+        className="butt btn btn-light"
+        onClick={handleToggleView}
+        disabled={isDropdownEmpty}
+      >
+        {viewAll ? 'Single Card View' : 'View All Cards'}
+      </button>
 
-      <button className="bobby btn btn-light" onClick={handleClick}>Show Set</button> {/* Button to trigger rendering */}
-      <button className="bobby btn btn-light" onClick={handleClear}>Clear Set</button>
-      {showResult && handleViewSet()} {/* Render the result of handleViewSet when showResult is true */}
+      {showResult && handleViewSet()}
     </div>
   );
 }

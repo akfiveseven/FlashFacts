@@ -41,6 +41,20 @@ export default function Create() {
       alert("No flashcards to save.");
       return;
     }
+
+    const sets = JSON.parse(localStorage.getItem('flashcardSets')) || []; // getting sets data in local storage
+    const selectedSet = sets.find((set) => set.name === nameRef.current.value);
+
+    if (selectedSet) {
+      alert("Set name has already been saved.")
+      return;
+    }
+
+
+    if (nameRef.current.value === "") {
+      alert("EMPTY SET NAME");
+      return;
+    }
   
     const flashcardSet = {
       id: new Date().getTime(), // Generate a unique ID for the flashcard set
