@@ -9,6 +9,8 @@ export default function Create() {
 
   const questionRef = useRef();
   const answerRef = useRef();
+  const nameRef = useRef();
+
   
 
   function handleSubmit() {
@@ -30,29 +32,48 @@ export default function Create() {
   }
 
   function handleClear() {
+    localStorage.clear(); 
     setQuestions([]);
   }
 
+  function handleSave() {
+    if (questions.length === 0) {
+      alert("No flashcards to save.");
+      return;
+    }
+  
+    const flashcardSet = {
+      id: new Date().getTime(), // Generate a unique ID for the flashcard set
+      cards: questions, // Save the current list of questions as cards in the set
+      name: nameRef.current.value
+    };
+  
+    // Save the flashcard set to local storage
 
-  //<button onClick={handleClear}>Clear</button>
+    // LOAD
+    const savedSets = JSON.parse(localStorage.getItem('flashcardSets')) || []; // getting sets data in local storage
 
-  useEffect(() => {
-    const storedQuestions = JSON.parse(localStorage.getItem('questionKey'))
-    if (storedQuestions) setQuestions(storedQuestions)
-  }, [])
+    savedSets.push(flashcardSet);
+    localStorage.setItem('flashcardSets', JSON.stringify(savedSets));
+  
+    // Clear the questions
+    setQuestions([]);
+    nameRef.current.value = '';
+    alert("Flashcard set saved successfully!");
+  }
 
-  useEffect(() => {
-    localStorage.setItem('questionKey', JSON.stringify(questions));
-  }, [questions]);
+
 
 
 
   return (
     <div className="thing text-center">
+      <input className="field form-control" ref={nameRef} type="text" placeholder="Set Name"></input>
       <input className="field form-control" ref={questionRef} type="text" placeholder="Question"></input>
       <input className="field form-control" ref={answerRef} type="text" placeholder="Answer"></input>
-      <button className="bob1 btn btn-light" onClick={handleSubmit}>Submit</button>
-      <button className="bob2 btn btn-light" onClick={handleClear}>Clear</button>
+      <button className="bob1 btn btn-light" onClick={handleSubmit}>Submit Card</button>
+      <button className="bob2 btn btn-light" onClick={handleClear}>Clear All Sets</button>
+      <button className="btn btn-light" onClick={handleSave}>Save Set</button>
       <div className="cardy">
         <CardList questions={questions} />
       </div>

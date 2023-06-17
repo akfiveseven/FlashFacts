@@ -7,6 +7,7 @@ import Home from './Home'
 import Navbar from './Navbar'
 import Create from './Create'
 import CardList from './CardList'
+import Study from './Study'
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
         <Routes>
           <Route path="/" />
           <Route path="/create" element={<Create />} />
+          <Route path="/study" element={<Study />} />
         </Routes>
       </Router>
     </>

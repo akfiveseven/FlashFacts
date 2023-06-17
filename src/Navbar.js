@@ -57,6 +57,7 @@ export default function Navbar() {
           <div className="navbar-nav">
             <Link className="nav-link"  aria-current="page" to="/">Home</Link>
             <Link className="nav-link" aria-current="page" to="/create">Create</Link>
+            <Link className="nav-link" aria-current="page" to="/study">Study</Link>
           </div>
         </div>
       </div>
