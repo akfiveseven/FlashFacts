@@ -11,11 +11,16 @@ export default function Select() {
   const [showResult, setShowResult] = useState(false); // State variable to control rendering
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [viewAll, setViewAll] = useState(false);
+  const [quizMode, setQuizMode] = useState(false);
+  const [userAnswer, setUserAnswer] = useState('');
+  const [showAnswer, setShowAnswer] = useState(false);
+  const [correctAnswer, setCorrectAnswer] = useState('');
 
   const handleChange = (event) => {
     setSelectedOption(event.target.value);
     setShowResult(false); // Reset the showResult state when the option changes
     setCurrentCardIndex(0); // Reset the current card index when the option changes
+    setQuizMode(false); // Reset the quiz mode when the option changes
   };
 
   const handleViewSet = () => {
@@ -28,6 +33,42 @@ export default function Select() {
         return (
           <div>
             <CardList questions={cards} />
+          </div>
+        );
+      } else if (quizMode) {
+        const currentCard = cards[currentCardIndex];
+
+        const handleNext = () => {
+          setCurrentCardIndex((prevIndex) =>
+            prevIndex === cards.length - 1 ? 0 : prevIndex + 1
+          );
+          setUserAnswer('');
+          setShowAnswer(false);
+          setCorrectAnswer('');
+        };
+
+        const handleCheckAnswer = () => {
+          if (userAnswer === currentCard.answer) {
+            setCorrectAnswer('Correct!');
+          } else {
+            setCorrectAnswer('Incorrect!');
+          }
+          setShowAnswer(true);
+        };
+
+        return (
+          <div>
+            <div>Question: {currentCard.question}</div>
+            <input
+              type="text"
+              value={userAnswer}
+              onChange={(e) => setUserAnswer(e.target.value)}
+            />
+            <button onClick={handleCheckAnswer}>Check Answer</button>
+            {showAnswer && <div>Answer: {currentCard.answer}</div>}
+            <div>{correctAnswer}</div>
+            <button onClick={handleNext}>Next</button>
+            <p>{`Card ${currentCardIndex + 1} / ${cards.length}`}</p>
           </div>
         );
       } else {
@@ -48,9 +89,10 @@ export default function Select() {
         return (
           <div>
             <Card question={currentCard.question} answer={currentCard.answer} />
+            <button onClick={handlePrev}>Previous</button>
+            <button onClick={handleNext}>Next</button>
             <p>{`Card ${currentCardIndex + 1} / ${cards.length}`}</p>
-            <button className="butt btn btn-light" onClick={handlePrev}>Previous</button>
-            <button className="butt btn btn-light" onClick={handleNext}>Next</button>
+            <button onClick={() => setQuizMode(true)}>Quiz Mode</button>
           </div>
         );
       }
@@ -63,10 +105,6 @@ export default function Select() {
     setShowResult(true); // Set showResult to true when the button is clicked
   };
 
-  const handleToggleView = () => {
-    setViewAll(!viewAll);
-  };
-
   const handleClear = () => {
     const selectedSet = sets.find((set) => set.name === selectedOption);
 
@@ -76,38 +114,31 @@ export default function Select() {
     }
 
     setSelectedOption('');
-    setShowResult(false);
-    setCurrentCardIndex(0);
   };
 
-  const isDropdownEmpty = selectedOption === '';
-
   return (
-    <div>
-      <select className="trigga" value={selectedOption} onChange={handleChange}>
-        <option value="">Select an option</option>
-        {sets.map((set) => (
-          <option key={set.id} value={set.name}>
-            {set.name}
-          </option>
-        ))}
-      </select>
+    <div className="dropdown">
+      <div className="foo">
+        <select className="trigga" value={selectedOption} onChange={handleChange}>
+          <option value="">Select an option</option>
+          {sets.map((set) => (
+            <option key={set.id} value={set.name}>
+              {set.name}
+            </option>
+          ))}
+        </select>
+      </div>
 
-      <button className="butt btn btn-light" onClick={handleClick} disabled={isDropdownEmpty}>
-       View Set 
+      <button className="bobby btn btn-light" onClick={handleClick} disabled={!selectedOption}>
+        Show Set
       </button>
-      <button className="butt btn btn-light" onClick={handleClear} disabled={isDropdownEmpty}>
+      <button className="bobby btn btn-light" onClick={handleClear} disabled={!selectedOption}>
         Clear Set
       </button>
-      <button
-        className="butt btn btn-light"
-        onClick={handleToggleView}
-        disabled={isDropdownEmpty}
-      >
-        {viewAll ? 'Single Card View' : 'View All Cards'}
+      <button className="bobby btn btn-light" onClick={() => setViewAll(true)} disabled={!selectedOption}>
+        View All Cards
       </button>
-
-      {showResult && handleViewSet()}
+      {showResult && handleViewSet()} {/* Render the result of handleViewSet when showResult is true */}
     </div>
   );
 }
