@@ -72,14 +72,17 @@ export default function Select() {
 
   return (
     <div className="dropdown">
-      <select className="trigga" value={selectedOption} onChange={handleChange}>
-        <option value="">Select an option</option>
-        {sets.map((set) => (
-          <option key={set.id} value={set.name}>
-            {set.name}
-          </option>
-        ))}
-      </select>
+        <div className="foo">
+
+            <select className="trigga" value={selectedOption} onChange={handleChange}>
+                <option value="">Select an option</option>
+                {sets.map((set) => (
+                <option key={set.id} value={set.name}>
+                    {set.name}
+                </option>
+                ))}
+            </select>
+        </div>
 
       <button className="bobby btn btn-light" onClick={handleClick}>Show Set</button> {/* Button to trigger rendering */}
       <button className="bobby btn btn-light" onClick={handleClear}>Clear Set</button>
