@@ -72,7 +72,7 @@ export default function Create() {
       <input className="field form-control" ref={questionRef} type="text" placeholder="Question"></input>
       <input className="field form-control" ref={answerRef} type="text" placeholder="Answer"></input>
       <button className="bob1 btn btn-light" onClick={handleSubmit}>Submit Card</button>
-      <button className="bob2 btn btn-light" onClick={handleClear}>Clear All Sets</button>
+      {/* <button className="bob2 btn btn-light" onClick={handleClear}>Clear All Sets</button> */}
       <button className="btn btn-light" onClick={handleSave}>Save Set</button>
       <div className="cardy">
         <CardList questions={questions} />

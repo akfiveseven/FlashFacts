@@ -20,13 +20,14 @@ export default function Study() {
            // <SetList onClick="handleView"/>
     return (
         <div className="viewbtn">
-            <h1>My Sets</h1>
+            <div className="viewbody">
+                <h1>My Sets</h1>
+            </div>
             <Select />
             {/* <button onClick={handleView}>Hi</button> */}
 
             {/* <SetList onClick={handleView}/> */}
             {/* <CardList questions={sets[0].cards} /> */}
-
         </div>
     );
 }
