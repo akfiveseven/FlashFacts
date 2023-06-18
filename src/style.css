@@ -23,32 +23,10 @@ body {
     translateY(var(--translate-y, 0));
 }
 
-.setCard {
-    display: -webkit-inline-flex; 
-    flex-direction: row;
-    justify-content: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    align-items: center;
-    margin-left: 10px;
-    margin-right: 10px;
-    position: relative; 
-    border-radius: .25rem;
-    box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
-    background-color: white;
-    height: 150px;
-    width: 250px;
-}
 
 .thing {
   margin-top: 30px;
 }
-/*
-.card:hover {
-  --translate-y: -2px;
-  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .5);
-}
-*/
 
 .card.flip {
   --rotate-y: 180deg;
@@ -103,16 +81,20 @@ ul {
   margin-bottom: 5px;
 }
 
-.cardy {
-
-}
-
+/*
 .bob1 {
   margin-right: 5px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 .bob2 {
+  margin-left: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+*/
+
+.createButtonStyle {
   margin-left: 5px;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -130,17 +112,17 @@ ul {
   padding-bottom: 40px;
 }
 
-.bobby {
+.buttonstyle {
   margin-left: 5px;
   height: 40px;
   margin-bottom: 5px;
 }
 
-.trigga {
+.selectstyle {
   height: 40px;
 }
 
-.foo {
+.bigcontainer {
   display: inline; 
 }
 
@@ -150,8 +132,4 @@ ul {
   color: #121212;
   text-shadow: 2px 7px 5px rgba(0,0,0,0.3), 
     0px -4px 10px rgba(255,255,255,0.3);
-}
-
-.butt {
-  margin-left: 5px;
 }

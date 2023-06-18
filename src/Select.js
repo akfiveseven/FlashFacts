@@ -76,10 +76,10 @@ export default function Select() {
               value={userAnswer}
               onChange={(e) => setUserAnswer(e.target.value)}
             />
-            <button className="bobby btn btn-light" onClick={handleCheckAnswer}>Check Answer</button>
+            <button className="buttonstyle btn btn-light" onClick={handleCheckAnswer}>Check Answer</button>
             {showAnswer && <div>Answer: {currentCard.answer}</div>}
             <div>{correctAnswer}</div>
-            <button className="bobby btn btn-light" onClick={handleNext}>Next</button>
+            <button className="buttonstyle btn btn-light" onClick={handleNext}>Next</button>
             <p>{`Card ${currentCardIndex + 1} / ${cards.length}`}</p>
           </div>
         );
@@ -101,8 +101,8 @@ export default function Select() {
         return (
           <div>
             <Card question={currentCard.question} answer={currentCard.answer} />
-            <button className="bobby btn btn-light" onClick={handlePrev}>Previous</button>
-            <button className="bobby btn btn-light" onClick={handleNext}>Next</button>
+            <button className="buttonstyle btn btn-light" onClick={handlePrev}>Previous</button>
+            <button className="buttonstyle btn btn-light" onClick={handleNext}>Next</button>
             <p>{`Card ${currentCardIndex + 1} / ${cards.length}`}</p>
           </div>
         );
@@ -136,8 +136,8 @@ export default function Select() {
 
   return (
     <div className="dropdown">
-      <div className="foo">
-        <select className="trigga" value={selectedOption} onChange={handleChange}>
+      <div className="bigcontainer">
+        <select className="selectstyle" value={selectedOption} onChange={handleChange}>
           <option value="">Select a Set</option>
           {sets.map((set) => (
             <option key={set.id} value={set.name}>
@@ -147,19 +147,19 @@ export default function Select() {
         </select>
       </div>
 
-      <button className="bobby btn btn-light" onClick={handleClick} disabled={!selectedOption}>
+      <button className="buttonstyle btn btn-light" onClick={handleClick} disabled={!selectedOption}>
         Show Set
       </button>
-      <button className="bobby btn btn-light" onClick={handleClear} disabled={!selectedOption}>
+      <button className="buttonstyle btn btn-light" onClick={handleClear} disabled={!selectedOption}>
         Clear Set
       </button>
-      <button className="bobby btn btn-light" onClick={() => setViewAll(!viewAll)} disabled={!selectedOption}>
+      <button className="buttonstyle btn btn-light" onClick={() => setViewAll(!viewAll)} disabled={!selectedOption}>
         {viewAll ? 'Single Card View' : 'View All Cards'}
       </button>
-      <button className="bobby btn btn-light" onClick={() => setQuizMode(!quizMode)} disabled={!selectedOption}>
+      <button className="buttonstyle btn btn-light" onClick={() => setQuizMode(!quizMode)} disabled={!selectedOption}>
         {quizMode ? 'Exit Quiz Mode' : 'Quiz Mode'}
       </button>
-      {/* <button className="bobby btn btn-light" onClick={handleRandomize} disabled={!selectedOption}>
+      {/* <button className="buttonstyle btn btn-light" onClick={handleRandomize} disabled={!selectedOption}>
         {randomize ? 'Disable Randomize' : 'Randomize'}
       </button> */}
       {showResult && handleViewSet()}
