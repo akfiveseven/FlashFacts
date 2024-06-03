@@ -151,7 +151,7 @@ export default function Select() {
         Show Set
       </button>
       <button className="buttonstyle btn btn-light" onClick={handleClear} disabled={!selectedOption}>
-        Clear Set
+        Delete Set
       </button>
       <button className="buttonstyle btn btn-light" onClick={() => setViewAll(!viewAll)} disabled={!selectedOption}>
         {viewAll ? 'Single Card View' : 'View All Cards'}

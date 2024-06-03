@@ -12,11 +12,10 @@ import Study from './Study'
 export default function App() {
   return (
     <>
-      <Router>
+      <Router basename="/quiz">
         <Navbar />
         <Routes>
-          <Route path="/" />
-          <Route path="/create" element={<Create />} />
+          <Route path="/create" element={<Create />}/>
           <Route path="/study" element={<Study />} />
         </Routes>
       </Router>

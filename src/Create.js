@@ -81,13 +81,20 @@ export default function Create() {
 
 
   return (
-    <div className="thing text-center">
-      <input className="field form-control" ref={nameRef} type="text" placeholder="Set Name"></input>
-      <input className="field form-control" ref={questionRef} type="text" placeholder="Question"></input>
-      <input className="field form-control" ref={answerRef} type="text" placeholder="Answer"></input>
-      <button className="btn btn-light" onClick={handleSubmit}>Submit Card</button>
-      <button className="createButtonStyle btn btn-light" onClick={handleSave}>Save Set</button>
-      <CardList questions={questions} />
-    </div>
+    <>
+      <div className="viewbtn">
+        <div className="viewbody">
+          <h1>Create Flashcard Set</h1>
+        </div>
+        <div className="thing text-center">
+          <input className="field form-control" ref={nameRef} type="text" placeholder="Set Name"></input>
+          <input className="field form-control" ref={questionRef} type="text" placeholder="Question"></input>
+          <input className="field form-control" ref={answerRef} type="text" placeholder="Answer"></input>
+          <button className="btn btn-light" onClick={handleSubmit}>Submit Card</button>
+          <button className="createButtonStyle btn btn-light" onClick={handleSave}>Save Set</button>
+          <CardList questions={questions} />
+        </div>
+      </div>
+    </>
   );
 }
