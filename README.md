@@ -1,1 +1,1 @@
-# Flash Facts: Flashcard & Quiz React App
+# Flash Facts: Quiz & Flashcard App [React.js]
